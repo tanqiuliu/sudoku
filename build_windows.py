@@ -11,7 +11,7 @@ import os
 def build_windows_exe():
     """Build Windows executable using PyInstaller"""
     
-    print("🏗️  Building Windows executable for Sudoku Game...")
+    print("Building Windows executable for Sudoku Game...")
     
     # PyInstaller command for Windows
     cmd = [
@@ -31,21 +31,21 @@ def build_windows_exe():
     try:
         # Run PyInstaller
         result = subprocess.run(cmd, check=True, capture_output=True, text=True)
-        print("✅ Windows executable built successfully!")
-        print(f"📍 Location: dist_windows/SudokuGame.exe")
-        print(f"📦 Size: {get_file_size('dist_windows/SudokuGame.exe')}")
+        print("Windows executable built successfully!")
+        print(f"Location: dist_windows/SudokuGame.exe")
+        print(f"Size: {get_file_size('dist_windows/SudokuGame.exe')}")
         
         # Create distribution package
         create_distribution_package()
         
     except subprocess.CalledProcessError as e:
-        print("❌ Build failed!")
+        print("Build failed!")
         print(f"Error: {e}")
         print(f"Output: {e.stdout}")
         print(f"Error output: {e.stderr}")
         sys.exit(1)
     except FileNotFoundError:
-        print("❌ PyInstaller not found!")
+        print("PyInstaller not found!")
         print("Install it with: pip install pyinstaller")
         sys.exit(1)
 
@@ -63,7 +63,7 @@ def get_file_size(filepath):
 
 def create_distribution_package():
     """Create a complete distribution package"""
-    print("📦 Creating distribution package...")
+    print("Creating distribution package...")
     
     # Create distribution directory
     os.makedirs("SudokuGame_Windows_Distribution", exist_ok=True)
@@ -74,7 +74,7 @@ def create_distribution_package():
     # Copy executable (if it exists, otherwise create placeholder)
     if os.path.exists("dist_windows/SudokuGame.exe"):
         shutil.copy2("dist_windows/SudokuGame.exe", "SudokuGame_Windows_Distribution/")
-        print("✅ Copied SudokuGame.exe")
+        print("Copied SudokuGame.exe")
     else:
         # Create placeholder message for when building on non-Windows
         placeholder = """This folder contains the distribution structure for Windows.
@@ -89,7 +89,7 @@ The batch file and README are ready to use once you have the .exe file.
 """
         with open("SudokuGame_Windows_Distribution/BUILD_ON_WINDOWS.txt", "w") as f:
             f.write(placeholder)
-        print("⚠️  Created BUILD_ON_WINDOWS.txt (no .exe available on macOS)")
+        print("Created BUILD_ON_WINDOWS.txt (no .exe available on macOS)")
     
     # Create batch file
     batch_content = """@echo off
@@ -123,7 +123,7 @@ pause > nul
     
     with open("SudokuGame_Windows_Distribution/START_SUDOKU_GAME.bat", "w") as f:
         f.write(batch_content)
-    print("✅ Created START_SUDOKU_GAME.bat")
+    print("Created START_SUDOKU_GAME.bat")
     
     # Create README
     readme_content = """# Sudoku Game - Windows Desktop Application
@@ -168,10 +168,10 @@ Enjoy playing Sudoku! 🧩✨
     
     with open("SudokuGame_Windows_Distribution/README.txt", "w") as f:
         f.write(readme_content)
-    print("✅ Created README.txt")
+    print("Created README.txt")
     
-    print(f"🎉 Distribution package ready: SudokuGame_Windows_Distribution/")
-    print("📂 Contains:")
+    print(f"Distribution package ready: SudokuGame_Windows_Distribution/")
+    print("Contains:")
     print("   - SudokuGame.exe (main executable)")
     print("   - START_SUDOKU_GAME.bat (launcher with nice interface)")
     print("   - README.txt (user instructions)")
@@ -182,7 +182,7 @@ if __name__ == "__main__":
     
     # Check if running on Windows for optimal build
     if sys.platform != "win32":
-        print("⚠️  This script is designed for Windows.")
+        print("This script is designed for Windows.")
         print("   For best results, run on a Windows machine.")
         print("   Alternatively, use GitHub Actions for cross-platform builds.")
         print("   Creating distribution package structure anyway...")
@@ -190,14 +190,14 @@ if __name__ == "__main__":
         
         # Skip interactive prompt and just create the distribution structure
         create_distribution_package()
-        print("\n🎯 Windows distribution package created!")
-        print("📂 See: SudokuGame_Windows_Distribution/")
-        print("📄 See: Windows_BUILD_INSTRUCTIONS.md for build options")
+        print("\nWindows distribution package created!")
+        print("See: SudokuGame_Windows_Distribution/")
+        print("See: Windows_BUILD_INSTRUCTIONS.md for build options")
         sys.exit(0)
     
     build_windows_exe()
     
-    print("\n🎯 Next Steps:")
+    print("\nNext Steps:")
     print("1. Test SudokuGame.exe on a Windows machine")
     print("2. Share the SudokuGame_Windows_Distribution folder")
     print("3. Users can run START_SUDOKU_GAME.bat to play!")
