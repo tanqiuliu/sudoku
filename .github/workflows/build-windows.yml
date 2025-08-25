@@ -29,7 +29,7 @@ jobs:
         pyinstaller --onefile --console --name SudokuGame-Windows sudoku_app.py --add-data "templates;templates" --add-data "sudoku.py;."
     
     - name: Upload Windows executable
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: SudokuGame-Windows
         path: dist/SudokuGame-Windows.exe
@@ -55,7 +55,7 @@ jobs:
         pyinstaller --onefile --console --name SudokuGame-macOS sudoku_app.py --add-data "templates:templates" --add-data "sudoku.py:."
     
     - name: Upload macOS executable
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: SudokuGame-macOS
         path: dist/SudokuGame-macOS
@@ -81,7 +81,7 @@ jobs:
         pyinstaller --onefile --console --name SudokuGame-Linux sudoku_app.py --add-data "templates:templates" --add-data "sudoku.py:."
     
     - name: Upload Linux executable
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: SudokuGame-Linux
         path: dist/SudokuGame-Linux
