@@ -32,7 +32,7 @@ jobs:
         Compress-Archive -Path "SudokuGame_Windows_Distribution/*" -DestinationPath "SudokuGame-Windows.zip"
     
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: SudokuGame-Windows
         path: SudokuGame-Windows.zip
