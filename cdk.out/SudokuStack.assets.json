@@ -1,0 +1,36 @@
+{
+  "version": "48.0.0",
+  "files": {
+    "b1ba76459989c97c16ad01d5cc3bf71dd0e38e7c76de933786045ac59c929825": {
+      "displayName": "SudokuLambda/Code",
+      "source": {
+        "path": "asset.b1ba76459989c97c16ad01d5cc3bf71dd0e38e7c76de933786045ac59c929825.zip",
+        "packaging": "file"
+      },
+      "destinations": {
+        "current_account-us-east-1-879d9f5f": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-us-east-1",
+          "objectKey": "b1ba76459989c97c16ad01d5cc3bf71dd0e38e7c76de933786045ac59c929825.zip",
+          "region": "us-east-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-us-east-1"
+        }
+      }
+    },
+    "679942d1ba3b6ccf1cffef8488ee925f54287c14015b5cb5deb91b892dc8983c": {
+      "displayName": "SudokuStack Template",
+      "source": {
+        "path": "SudokuStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "current_account-us-east-1-b8213c49": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-us-east-1",
+          "objectKey": "679942d1ba3b6ccf1cffef8488ee925f54287c14015b5cb5deb91b892dc8983c.json",
+          "region": "us-east-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-us-east-1"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}
