@@ -9,6 +9,7 @@ import os
 import webbrowser
 import threading
 import time
+import socket
 from flask import Flask, render_template, request, jsonify
 from sudoku import SudokuGame
 
@@ -102,22 +103,34 @@ def quit_app():
     threading.Thread(target=shutdown).start()
     return jsonify({'message': 'Application shutting down...'})
 
-def open_browser():
+def find_free_port():
+    """Find a free port to use for the Flask app"""
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.bind(('', 0))
+        s.listen(1)
+        port = s.getsockname()[1]
+    return port
+
+def open_browser(port):
     """Open the default web browser to the app URL"""
     time.sleep(1.5)  # Give Flask time to start
-    webbrowser.open('http://localhost:5050')
+    webbrowser.open(f'http://localhost:{port}')
 
 def main():
+    # Find an available port
+    port = find_free_port()
+    
     print("🎮 Starting Sudoku Desktop Application...")
     print("🌐 Opening browser window...")
-    print("📝 To quit the application, close this console window or visit http://localhost:5050/quit")
+    print(f"📝 To quit the application, close this console window or visit http://localhost:{port}/quit")
+    print(f"🌍 Running on: http://localhost:{port}")
     
     # Start browser opening in a separate thread
-    threading.Thread(target=open_browser, daemon=True).start()
+    threading.Thread(target=open_browser, args=(port,), daemon=True).start()
     
     try:
         # Run Flask app
-        app.run(host='127.0.0.1', port=5050, debug=False, use_reloader=False)
+        app.run(host='127.0.0.1', port=port, debug=False, use_reloader=False)
     except KeyboardInterrupt:
         print("\n👋 Sudoku application closed!")
     except Exception as e:
