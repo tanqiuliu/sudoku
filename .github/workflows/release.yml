@@ -1,0 +1,57 @@
+name: Build and Release Windows Executable
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pygame pyinstaller
+    
+    - name: Build Windows executable
+      run: |
+        python build_windows.py
+    
+    - name: Create release archive
+      run: |
+        Compress-Archive -Path "SudokuGame_Windows_Distribution/*" -DestinationPath "SudokuGame-Windows.zip"
+    
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: SudokuGame-Windows
+        path: SudokuGame-Windows.zip
+    
+    - name: Create Release
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v1
+      with:
+        files: SudokuGame-Windows.zip
+        body: |
+          ## Sudoku Game Windows Release
+          
+          Download and extract the ZIP file, then run `START_SUDOKU_GAME.bat` to play!
+          
+          ### What's included:
+          - Pre-compiled Windows executable
+          - Start batch file for easy launching
+          - README with instructions
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
