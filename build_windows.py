@@ -71,10 +71,25 @@ def create_distribution_package():
     # Copy files
     import shutil
     
-    # Copy executable
+    # Copy executable (if it exists, otherwise create placeholder)
     if os.path.exists("dist_windows/SudokuGame.exe"):
         shutil.copy2("dist_windows/SudokuGame.exe", "SudokuGame_Windows_Distribution/")
         print("✅ Copied SudokuGame.exe")
+    else:
+        # Create placeholder message for when building on non-Windows
+        placeholder = """This folder contains the distribution structure for Windows.
+
+To get the actual SudokuGame.exe, you need to:
+
+1. Build on a Windows machine using: python build_windows.py
+2. Use GitHub Actions (see .github/workflows/build-windows.yml)
+3. Use Docker with Windows container
+
+The batch file and README are ready to use once you have the .exe file.
+"""
+        with open("SudokuGame_Windows_Distribution/BUILD_ON_WINDOWS.txt", "w") as f:
+            f.write(placeholder)
+        print("⚠️  Created BUILD_ON_WINDOWS.txt (no .exe available on macOS)")
     
     # Create batch file
     batch_content = """@echo off
@@ -170,12 +185,15 @@ if __name__ == "__main__":
         print("⚠️  This script is designed for Windows.")
         print("   For best results, run on a Windows machine.")
         print("   Alternatively, use GitHub Actions for cross-platform builds.")
+        print("   Creating distribution package structure anyway...")
         print()
         
-        response = input("Continue anyway? (y/N): ").lower().strip()
-        if response != 'y':
-            print("Cancelled.")
-            sys.exit(0)
+        # Skip interactive prompt and just create the distribution structure
+        create_distribution_package()
+        print("\n🎯 Windows distribution package created!")
+        print("📂 See: SudokuGame_Windows_Distribution/")
+        print("📄 See: Windows_BUILD_INSTRUCTIONS.md for build options")
+        sys.exit(0)
     
     build_windows_exe()
     
