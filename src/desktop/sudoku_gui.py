@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 import tkinter.font as tkfont
-from sudoku import SudokuGame
+from core.sudoku import SudokuGame
 
 
 class SudokuGUI:
@@ -19,7 +19,7 @@ class SudokuGUI:
         
     def setup_ui(self):
         main_frame = ttk.Frame(self.root, padding="10")
-        main_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+        main_frame.grid(row=0, column=0, sticky="nsew")
         
         # Title
         title_label = ttk.Label(main_frame, text="Sudoku", font=('Arial', 24, 'bold'))
@@ -70,7 +70,7 @@ class SudokuGUI:
                                     font=font, justify='center',
                                     bd=0, highlightthickness=0,
                                     width=2)
-                cell_entry.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+                cell_entry.grid(row=0, column=0, sticky="nsew")
                 cell_frame.grid_rowconfigure(0, weight=1)
                 cell_frame.grid_columnconfigure(0, weight=1)
                 

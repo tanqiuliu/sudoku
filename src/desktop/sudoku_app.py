@@ -70,6 +70,9 @@ def new_game(difficulty):
 @app.route('/make_move', methods=['POST'])
 def make_move():
     data = request.json
+    if data is None:
+        return jsonify({'error': 'No JSON data received'}), 400
+
     row, col, num = data['row'], data['col'], data['num']
     session_id = data.get('session', 'default')
     

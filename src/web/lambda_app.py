@@ -1,8 +1,9 @@
 from mangum import Mangum
 from flask import Flask, render_template, request, jsonify
+from a2wsgi import WSGIMiddleware
 import json
 import os
-from sudoku import SudokuGame
+from core.sudoku import SudokuGame
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'sudoku_game_secret_key_123')
@@ -53,6 +54,8 @@ def new_game(difficulty):
 @app.route('/make_move', methods=['POST'])
 def make_move():
     data = request.json
+    if data is None:
+        return jsonify({'error': 'No JSON data provided'}), 400
     row, col, num = data['row'], data['col'], data['num']
     session_id = data.get('session', 'default')
     
@@ -81,8 +84,6 @@ def get_hint():
     else:
         return jsonify({'hint': None})
 
-# Use AWS Lambda Web Adapter approach
-import awsgi
-
-def lambda_handler(event, context):
-    return awsgi.response(app, event, context)
+# Convert Flask (WSGI) to ASGI and wrap with Mangum
+asgi_app = WSGIMiddleware(app)
+handler = Mangum(asgi_app, lifespan="off")

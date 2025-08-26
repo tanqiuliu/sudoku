@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify, session
 import json
-from sudoku import SudokuGame
+from core.sudoku import SudokuGame
 
 app = Flask(__name__)
 app.secret_key = 'sudoku_game_secret_key_123'
@@ -41,6 +41,9 @@ def new_game(difficulty):
 @app.route('/make_move', methods=['POST'])
 def make_move():
     data = request.json
+    if not data or 'row' not in data or 'col' not in data or 'num' not in data:
+        return jsonify({'valid': False, 'complete': False, 'error': 'Invalid request data'}), 400
+
     row, col, num = data['row'], data['col'], data['num']
     
     game = get_game()
