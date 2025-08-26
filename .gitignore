@@ -48,4 +48,4 @@ Thumbs.db
 .claude/
 
 # CDK
-cdk.out/
+*/**/cdk.out/*
