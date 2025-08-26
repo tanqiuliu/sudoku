@@ -40,8 +40,7 @@ sudoku/
 │   ├── build-windows.yml      # Multi-platform build
 │   └── release.yml             # Release automation
 ├── pyproject.toml              # Project configuration
-├── requirements.txt            # Python dependencies
-└── uv.lock                     # Lockfile
+└── uv.lock                     # Dependency lockfile
 ```
 
 ## Quick Start
@@ -90,8 +89,8 @@ cd deploy
 
 ### Local Development
 ```bash
-pip install -r requirements.txt
-python src/web/app.py
+uv sync
+uv run python src/web/app.py
 ```
 
 ## Features

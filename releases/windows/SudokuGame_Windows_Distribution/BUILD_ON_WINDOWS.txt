@@ -1,9 +1,0 @@
-This folder contains the distribution structure for Windows.
-
-To get the actual SudokuGame.exe, you need to:
-
-1. Build on a Windows machine using: python build_windows.py
-2. Use GitHub Actions (see .github/workflows/build-windows.yml)
-3. Use Docker with Windows container
-
-The batch file and README are ready to use once you have the .exe file.
