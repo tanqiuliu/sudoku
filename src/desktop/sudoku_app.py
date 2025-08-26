@@ -11,9 +11,10 @@ import threading
 import time
 import socket
 from flask import Flask, render_template, request, jsonify
-import sys
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'core'))
-from sudoku import SudokuGame
+
+# Add the parent src directory to path for imports
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+from core.sudoku import SudokuGame
 
 # Add the current directory to the path for template resolution
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
