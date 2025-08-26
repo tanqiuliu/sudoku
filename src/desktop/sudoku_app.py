@@ -11,12 +11,16 @@ import threading
 import time
 import socket
 from flask import Flask, render_template, request, jsonify
+import sys
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'core'))
 from sudoku import SudokuGame
 
 # Add the current directory to the path for template resolution
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-app = Flask(__name__)
+# Set template folder to the web templates
+template_dir = os.path.join(os.path.dirname(__file__), '..', 'web', 'templates')
+app = Flask(__name__, template_folder=template_dir)
 app.secret_key = 'sudoku_desktop_app_secret_key'
 
 # Global game state
