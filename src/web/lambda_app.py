@@ -3,9 +3,17 @@ from flask import Flask, render_template, request, jsonify
 from a2wsgi import WSGIMiddleware
 import json
 import os
-from core.sudoku import SudokuGame
+import sys
 
-app = Flask(__name__)
+# Add current directory to path for imports
+sys.path.insert(0, os.path.dirname(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+
+from src.core.sudoku import SudokuGame
+
+# Set template folder relative to current file
+template_dir = os.path.join(os.path.dirname(__file__), 'templates')
+app = Flask(__name__, template_folder=template_dir)
 app.secret_key = os.environ.get('SECRET_KEY', 'sudoku_game_secret_key_123')
 
 # Simple in-memory storage for Lambda (since sessions don't work well)
